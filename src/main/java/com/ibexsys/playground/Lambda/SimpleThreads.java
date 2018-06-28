@@ -15,9 +15,6 @@ public class SimpleThreads {
 
     public SimpleThreads() {
 
-        employeeList.add(new Employee("John Doe", 23));
-        employeeList.add(new Employee("Dave Jones", 33));
-        employeeList.add(new Employee("Jack Hill", 33));
     }
 
 
@@ -34,63 +31,62 @@ public class SimpleThreads {
         }).start();
     }
 
-    public void EmployeeListWithParamters() {
 
-//        logger.info("Using non-lambda collections sort...");
-//        // Traditional - COOL Stuff
-//        Collections.sort(employeeList, new Comparator<Employee>(){
-//            @Override
-//            public int compare(Employee employee1, Employee employee2){
-//                return employee1.getName().compareTo(employee2.getName());
-//            }
-//        });
+    /********************************************************************************************
+     *   Lambda replaces this code
+        Collections.sort(employeeList, new Comparator<Employee>(){
+            @Override
+            public int compare(Employee employee1, Employee employee2){
+                return employee1.getName().compareTo(employee2.getName());
+            }
+        });
 
-        /*
-           3 parts to the expression -
-             1,-Argument list - Employee employee1, Employee employee2
-             2. Arrow token ->
-             3. Body - employee1.getName().compareTo(employee2.getName())
-         */
+         3 parts to the expression -
+         1,-Argument list - Employee employee1, Employee employee2
+         2. Arrow token ->
+         3. Body - employee1.getName().compareTo(employee2.getName())
+     *********************************************************************************************/
+    public List<Employee> EmployeeListWithParameters(List<Employee> employeeList) {
 
         Collections.sort(employeeList, (Employee employee1, Employee employee2) ->
                 employee1.getName().compareTo(employee2.getName()));
 
-        for (Employee employee : employeeList) {
-            logger.info("Employee name -> " + employee.getName());
-        }
-
-        logger.info("Using lambda collections sort...");
+        return employeeList;
     }
 
 
-    public void EmployeeListWithInferredParamters() {
+    public List<Employee> EmployeeListWithInferredParameters(List<Employee> employeeList) {
 
-        /*
-           3 parts to the expression
-             1, Argument list - Employee employee1, Employee employee2
-             2. Arrow token ->
-             3. Body - employee1.getName().compareTo(employee2.getName())
-         */
 
         Collections.sort(employeeList, (emp1, emp2) ->
                 emp1.getName().compareTo(emp2.getName()));
 
-        for (Employee employee : employeeList) {
-            logger.info("Employee name -> " + employee.getName());
-        }
-
-        logger.info("Using lambda collections sort inferred parameters ...");
+        return employeeList;
     }
 
+    public List<Employee> getEmployeeSortedListByName(List<Employee> employeeList){
 
+        // Sort by name
+        Collections.sort(employeeList, (emp1, emp2) ->
+                    emp1.getName().compareTo(emp2.getName()));
+
+        return employeeList;
+    }
+
+    public List<Employee> getEmployeeSortedListByAge(List<Employee> employeeList){
+
+         // Sort by age
+        Collections.sort(employeeList, (emp1, emp2) ->  emp1.getAge().compareTo(emp2.getAge()));
+
+        return employeeList;
+    }
 }
-
 
 class Employee {
     private String name;
-    private int age;
+    private Integer age;
 
-    public Employee(String name, int age) {
+    public Employee(String name, Integer age) {
         this.name = name;
         this.age = age;
     }
@@ -103,11 +99,11 @@ class Employee {
         this.name = name;
     }
 
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
